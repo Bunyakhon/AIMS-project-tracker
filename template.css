@@ -58,3 +58,18 @@
 .setup-banner strong{font-size:20px}
 .setup-banner p{line-height:1.7;color:#234}
 .setup-banner .btn{display:inline-flex;text-decoration:none}
+
+/* Detailed scope/task form guidance (no DB schema or JS changes). */
+.task-modal{width:min(780px,calc(100vw - 24px))}
+.task-modal .task-form-intro{margin:0 0 4px;color:#344765;font-size:16px;line-height:1.85}
+.task-modal .task-form-alert{background:#fff8ed;border:1px solid #ecd5ad;border-radius:11px;padding:12px 14px;line-height:1.75;color:#704615;font-size:15px}
+.task-modal .task-form-alert p{margin:5px 0 0}
+.task-modal .task-field-help{margin:-6px 0 3px;color:#53647d;font-size:14px;font-weight:400;line-height:1.7}
+.task-modal label{gap:8px}
+.task-modal textarea{line-height:1.8;white-space:pre-wrap}
+.task-modal .task-form-example{border:1px solid #d7e4f7;background:#f5f8ff;border-radius:11px;padding:11px 14px;margin:1px 0 4px}
+.task-modal .task-form-example summary{cursor:pointer;color:#1c4f9e;font-size:16px;font-weight:700;line-height:1.6}
+.task-modal .task-form-example-body{padding:7px 2px 0;font-size:15px;line-height:1.8;overflow-wrap:anywhere}
+.task-modal .task-form-example-body p{margin:7px 0}
+.task-details-list li{overflow-wrap:anywhere;white-space:pre-wrap}
+@media(max-width:650px){.task-modal{padding:18px}.task-modal .task-form-intro{font-size:15px}.task-modal .task-field-help{font-size:13px}}
