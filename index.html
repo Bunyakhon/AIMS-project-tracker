@@ -132,16 +132,61 @@
     </form>
   </dialog>
 
-  <dialog id="taskDialog" class="modal">
+  <dialog id="taskDialog" class="modal task-modal">
     <form id="taskForm">
       <h2 id="taskDialogTitle">เพิ่มข้อ / งาน</h2>
-      <label>สัปดาห์ <select name="week_id" required></select></label>
-      <label>เลขข้ออ้างอิง (กรอกเองได้) <input name="reference" maxlength="100" placeholder="เช่น 2.3.1.1 ข้อที่ 1"></label>
-      <label>หัวข้อเต็ม <input name="title" maxlength="250" required></label>
-      <label>บทบาท <input name="role" maxlength="150" placeholder="เช่น นักศึกษาสหกิจศึกษา"></label>
-      <label>รายละเอียดขอบเขตแบบเต็ม <textarea name="description" maxlength="15000" rows="6"></textarea></label>
-      <label>รายการย่อยในข้อกำหนด (หนึ่งรายการต่อบรรทัด) <textarea name="details" rows="4" placeholder="เช่น ชื่อ-นามสกุล&#10;อีเมล&#10;เบอร์โทรศัพท์"></textarea></label>
-      <label>สถานะเริ่มต้น <select name="status"><option value="not_started">ยังไม่เริ่ม</option><option value="in_progress">กำลังดำเนินการ</option><option value="completed">เสร็จแล้ว</option></select></label>
+      <p class="task-form-intro">บันทึกข้อกำหนดจากเอกสารขอบเขตโครงงาน (Scope of Special Project) ให้ละเอียดและตรวจสอบย้อนกลับได้ โดยแนะนำให้แยก <strong>หนึ่งข้อกำหนดเป็นหนึ่งรายการงาน</strong> และใช้เลขอ้างอิงตามเอกสารต้นฉบับ</p>
+      <div class="task-form-alert" role="note">
+        <strong>ข้อควรระวังด้านข้อมูลส่วนบุคคล</strong>
+        <p>ชื่อข้อ รายละเอียด รายการย่อย และโน้ตงานในระบบนี้เปิดอ่านได้สาธารณะ ควรกรอกเฉพาะข้อกำหนดหรือประเภทข้อมูลที่ต้องจัดการ ห้ามกรอกเลขประจำตัวประชาชน เบอร์โทร ที่อยู่ หรือข้อมูลอ่อนไหวของบุคคลจริง</p>
+      </div>
+
+      <label>สัปดาห์ที่ดำเนินงาน
+        <select name="week_id" required aria-describedby="taskWeekHelp"></select>
+      </label>
+      <p class="task-field-help" id="taskWeekHelp">เลือกสัปดาห์ที่วางแผนพัฒนา ทดสอบ หรือส่งมอบฟังก์ชันนี้ หากแผนเปลี่ยนสามารถแก้ไขเพื่อย้ายงานไปยังสัปดาห์อื่นได้ภายหลัง</p>
+
+      <label>เลขข้ออ้างอิงจากเอกสาร (ไม่บังคับ)
+        <input name="reference" maxlength="100" placeholder="เช่น 2.3.2.3" aria-describedby="taskReferenceHelp">
+      </label>
+      <p class="task-field-help" id="taskReferenceHelp">ใช้เลขเดียวกับหัวข้อในเอกสาร เช่น 2.3.1.1, 2.3.2.1 หรือ 2.3.2.3 เพื่อค้นหาและเทียบกับขอบเขตได้ง่าย สำหรับงานที่ไม่ได้มาจากข้อกำหนดในเอกสาร สามารถเว้นว่างได้</p>
+
+      <label>หัวข้อของงาน (จำเป็น)
+        <input name="title" maxlength="250" required placeholder="เช่น จัดเก็บและปกป้องข้อมูลส่วนบุคคลของผู้สมัคร" aria-describedby="taskTitleHelp">
+      </label>
+      <p class="task-field-help" id="taskTitleHelp">ระบุชื่อฟังก์ชันหรือผลลัพธ์ที่ต้องทำให้ชัดเจน เช่น “นำเข้าข้อมูลผู้สมัครตามรอบการสมัคร” แทนคำกว้าง ๆ เช่น “จัดการข้อมูล”</p>
+
+      <label>บทบาทผู้ใช้งานที่เกี่ยวข้อง
+        <input name="role" maxlength="150" placeholder="เช่น เจ้าหน้าที่ฝ่ายวิชาการ" aria-describedby="taskRoleHelp">
+      </label>
+      <p class="task-field-help" id="taskRoleHelp">ระบุผู้ใช้งานหรือผู้มีสิทธิ์รับผิดชอบฟังก์ชัน เช่น Super Admin, เจ้าหน้าที่ฝ่ายวิชาการ, หัวหน้าภาควิชา หรืออาจารย์ผู้สัมภาษณ์ ข้อมูลนี้ใช้กรองรายการงานตามบทบาทได้</p>
+
+      <label>รายละเอียดขอบเขตแบบเต็ม
+        <textarea name="description" maxlength="15000" rows="8" aria-describedby="taskDescriptionHelp" placeholder="ตัวอย่างหัวข้อ 2.3.2.3:&#10;ระบบต้องรองรับการจัดเก็บข้อมูลอ่อนไหวของนักศึกษาผู้สมัคร โดยเข้ารหัสข้อมูลที่จัดเก็บในฐานข้อมูลตามขอบเขต และกำหนดให้เฉพาะเจ้าหน้าที่ฝ่ายวิชาการที่มีสิทธิ์สามารถเข้าถึงข้อมูลเหล่านี้ได้"></textarea>
+      </label>
+      <p class="task-field-help" id="taskDescriptionHelp">เขียนให้ครบตามเอกสารว่า <strong>ระบบต้องทำอะไร → ใครมีสิทธิ์ใช้งาน → เงื่อนไขหรือข้อจำกัดคืออะไร → ผลลัพธ์ที่คาดหวังคืออะไร</strong> สามารถแบ่งย่อหน้าได้ รองรับสูงสุด 15,000 ตัวอักษร ไม่จำเป็นต้องแต่งข้อกำหนดเพิ่มเติมจากเอกสาร</p>
+
+      <label>รายการย่อยในข้อกำหนด (หนึ่งรายการต่อบรรทัด)
+        <textarea name="details" rows="6" aria-describedby="taskDetailsHelp" placeholder="จัดเก็บข้อมูลส่วนบุคคลที่ต้องป้องกันตามขอบเขต&#10;เข้ารหัสข้อมูลอ่อนไหวที่จัดเก็บ&#10;กำหนดสิทธิ์ให้เฉพาะเจ้าหน้าที่ฝ่ายวิชาการเข้าถึงได้"></textarea>
+      </label>
+      <p class="task-field-help" id="taskDetailsHelp">แยกหัวข้อย่อยที่ตรวจสอบได้เป็นรายการละหนึ่งบรรทัด เช่น ฟังก์ชัน การจำกัดสิทธิ์ หรือเงื่อนไขการทดสอบ (สูงสุด 100 รายการ รายการละไม่เกิน 1,000 ตัวอักษร) ไม่ควรใส่ข้อมูลผู้สมัครจริง</p>
+
+      <details class="task-form-example">
+        <summary>ดูตัวอย่างการกรอกจากหัวข้อ 2.3.2.3 ในภาพขอบเขตโครงงาน</summary>
+        <div class="task-form-example-body">
+          <p><strong>เลขข้ออ้างอิง:</strong> 2.3.2.3</p>
+          <p><strong>หัวข้อ:</strong> จัดเก็บและปกป้องข้อมูลส่วนบุคคลของผู้สมัคร</p>
+          <p><strong>บทบาท:</strong> เจ้าหน้าที่ฝ่ายวิชาการ</p>
+          <p><strong>รายละเอียด:</strong> รองรับการจัดเก็บข้อมูลอ่อนไหวของนักศึกษาในฐานข้อมูล เช่น ประเภทข้อมูลเลขประจำตัวประชาชน เบอร์โทรศัพท์ และที่อยู่ โดยเข้ารหัสและจำกัดการแสดงข้อมูลให้เฉพาะเจ้าหน้าที่ฝ่ายวิชาการที่ได้รับสิทธิ์</p>
+          <p><strong>รายการย่อย:</strong> การเข้ารหัสข้อมูล / การจำกัดสิทธิ์เข้าถึง / การแสดงผลข้อมูลตามสิทธิ์ผู้ใช้งาน</p>
+          <p class="task-field-help">ตัวอย่างนี้สรุปจากภาพที่ให้มา ไม่ใช่ข้อมูลนักศึกษาจริง ให้ปรับข้อความให้ตรงเอกสารฉบับที่ใช้งาน</p>
+        </div>
+      </details>
+
+      <label>สถานะเริ่มต้น
+        <select name="status" aria-describedby="taskStatusHelp"><option value="not_started">ยังไม่เริ่ม</option><option value="in_progress">กำลังดำเนินการ</option><option value="completed">เสร็จแล้ว</option></select>
+      </label>
+      <p class="task-field-help" id="taskStatusHelp">“ยังไม่เริ่ม” = งานในแผน, “กำลังดำเนินการ” = เริ่มทำแล้ว, “เสร็จแล้ว” = มีผลลัพธ์ที่ตรวจสอบได้ สามารถเปลี่ยนสถานะภายหลังได้</p>
       <div class="actions"><button class="btn primary" type="submit">บันทึกข้อ / งาน</button><button class="btn" type="button" data-close="taskDialog">ยกเลิก</button></div>
     </form>
   </dialog>
